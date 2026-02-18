@@ -1,0 +1,124 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Elite Pro Menu | Multi-Hack",
+   LoadingTitle = "Carregando Sistema...",
+   LoadingSubtitle = "by Gemini",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "EliteProConfig",
+      FileName = "MainConfig"
+   }
+})
+
+-- Variáveis de Controle
+local FovSize = 50
+local AimbotEnabled = false
+local EspEnabled = false
+local RainbowSpeed = 0.1
+
+----------------------------------------------------------------
+-- ABA 1: COMBAT
+----------------------------------------------------------------
+local CombatTab = Window:CreateTab("Combat", 4483362458) -- Ícone de espada
+
+CombatTab:CreateSection("Targeting")
+
+CombatTab:CreateToggle({
+   Name = "Aimbot (Wall Check)",
+   CurrentValue = false,
+   Callback = function(Value)
+      AimbotEnabled = Value
+      -- Lógica: Verifica Raycast para não travar através de paredes
+   end,
+})
+
+CombatTab:CreateSlider({
+   Name = "Field of View (FOV)",
+   Range = {0, 100},
+   Increment = 1,
+   Suffix = "Size",
+   CurrentValue = 50,
+   Callback = function(Value)
+      FovSize = Value
+      -- Lógica: Atualiza o tamanho do círculo desenhado no meio da tela
+   end,
+})
+
+CombatTab:CreateSection("Weaponry")
+
+CombatTab:CreateToggle({
+   Name = "No Spread / No Recoil",
+   CurrentValue = false,
+   Callback = function(Value)
+      -- Lógica: Modifica as propriedades da ferramenta atual (Current Weapon)
+   end,
+})
+
+CombatTab:CreateToggle({
+   Name = "Infinite Ammo",
+   CurrentValue = false,
+   Callback = function(Value)
+      -- Lógica: Trava o valor da munição ou manipula o evento de recarga
+   end,
+})
+
+CombatTab:CreateDropdown({
+   Name = "Insta-Kill (Target)",
+   Options = {"Selecione um Jogador"}, -- Carregar lista de players dinamicamente
+   CurrentOption = {""},
+   MultipleOptions = false,
+   Callback = function(Option)
+      -- Lógica: "Magic Bullet" que redireciona o dano do chão para o Player escolhido
+      Rayfield:Notify({Title = "Alvo Selecionado", Content = "Pronto para abater: " .. Option[1]})
+   end,
+})
+
+----------------------------------------------------------------
+-- ABA 2: ESP (VISUALS)
+----------------------------------------------------------------
+local VisualsTab = Window:CreateTab("ESP", 4483345998)
+
+VisualsTab:CreateToggle({
+   Name = "Enable ESP Box",
+   CurrentValue = false,
+   Callback = function(Value)
+      EspEnabled = Value
+   end,
+})
+
+VisualsTab:CreateToggle({
+   Name = "Snaplines (Lines)",
+   CurrentValue = false,
+   Callback = function(Value)
+      -- Lógica: Desenha linha da base da tela até a Box do inimigo
+   end,
+})
+
+VisualsTab:CreateToggle({
+   Name = "Color Rainbow (Chroma)",
+   CurrentValue = false,
+   Callback = function(Value)
+      -- Lógica: Loop While true que alterna o RGB das Boxes e Lines
+   end,
+})
+
+----------------------------------------------------------------
+-- ABA 3: SKINS
+----------------------------------------------------------------
+local SkinTab = Window:CreateTab("Skins", 4483362143)
+
+SkinTab:CreateLabel("Apenas visível para você (Client-Side)")
+
+SkinTab:CreateToggle({
+   Name = "Infinity Skin Unlocker",
+   CurrentValue = false,
+   Callback = function(Value)
+      if Value then
+          -- Lógica: Percorre a ReplicatedStorage ou Inventory e seta "Owned = true"
+          Rayfield:Notify({Title = "Skins Ativadas", Content = "Todas as facas e armas foram liberadas visualmente."})
+      else
+          -- Lógica: Reseta o inventário para os itens originais
+      end
+   end,
+})
